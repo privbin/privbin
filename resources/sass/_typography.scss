@@ -1,0 +1,11 @@
+.text-max-line-2 {
+    position: relative;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    width: 100%;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    max-height: $line-height-base * 2rem;
+}

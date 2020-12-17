@@ -1,0 +1,12 @@
+.alert {
+    border: none;
+    box-shadow: $box-shadow-sm;
+    font-size: $font-size-sm;
+
+    @extend .bg-gradient;
+
+    &.alert-danger {
+        background-color: darken($danger, 30);
+        @extend .text-gray-200;
+    }
+}

@@ -12,4 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.config.publicPath = 'public_html';
-mix.js('resources/js/app.js', 'public_html/js').sass('resources/sass/app.scss', 'public_html/css');
+mix
+    .js('resources/js/app.js', 'public_html/js')
+    .sass('resources/sass/app.scss', 'public_html/css')
+    .browserSync('http://127.0.0.1:8000/')
+    .webpackConfig(require('./webpack.config'));
+
