@@ -2,8 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Enums\EntryType;
+use App\Enums\State;
 use App\Models\Entry;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class EntryFactory extends Factory
 {
@@ -22,7 +27,11 @@ class EntryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'state' => State::getRandomValue(),
+            'type' => EntryType::getRandomValue(),
+            'password' => rand(0, 1) ? Hash::make('password') : null,
+            'content' => $this->faker->text,
+            'expires_at' => Carbon::make('+'.rand(0, 59).' minutes'),
         ];
     }
 }
