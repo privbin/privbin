@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class EntryController extends Controller
 {
@@ -26,6 +27,8 @@ class EntryController extends Controller
         $expires = Carbon::make("+{$expires[1]} {$expires[0]}");
 
         $entry = Entry::create([
+            'uuid' => Str::uuid(),
+            'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
             'type' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
