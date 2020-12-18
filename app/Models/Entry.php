@@ -21,6 +21,8 @@ class Entry extends Model
      * @var string[] $fillable
      */
     protected $fillable = [
+        'uuid',
+        'delete_uuid',
         'state',
         'type',
         'password',
@@ -35,4 +37,12 @@ class Entry extends Model
         'state' => State::class,
         'type' => EntryType::class,
     ];
+
+    /**
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
 }

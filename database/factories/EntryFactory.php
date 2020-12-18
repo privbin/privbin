@@ -27,6 +27,8 @@ class EntryFactory extends Factory
     public function definition()
     {
         return [
+            'uuid' => Str::uuid(),
+            'delete_uuid' => Str::uuid(),
             'state' => State::getRandomValue(),
             'type' => EntryType::getRandomValue(),
             'password' => rand(0, 1) ? Hash::make('password') : null,

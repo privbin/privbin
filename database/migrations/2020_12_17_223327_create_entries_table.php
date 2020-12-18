@@ -15,6 +15,8 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->uuid('delete_uuid')->unique();
             $table->enum('state', \App\Enums\State::asArray())->default(\App\Enums\State::Active());
             $table->enum('type', \App\Enums\EntryType::asArray())->default(\App\Enums\EntryType::PlainText());
             $table->string('password')->nullable()->default(null);
