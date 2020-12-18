@@ -51,11 +51,11 @@ class EntryController extends Controller
      */
     public function show(Request $request, Entry $entry): Response
     {
-        abort_if($entry->state != State::Active(), 404);
-
         if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
             $entry->update(['state' => State::Deleted()]);
         }
+
+        abort_if($entry->state != State::Active(), 404);
 
         if (strlen($entry->password) > 0) {
             if (session()->get('entry.access.'.$entry->uuid) == $entry->password) {
@@ -70,6 +70,26 @@ class EntryController extends Controller
         SHOW:
         session()->put('entry.access.'.$entry->uuid, 'viewed');
         return response()->view('web.entry.show', compact('entry'));
+    }
+
+    /**
+     * @param Request $request
+     * @param Entry $entry
+     * @return Response
+     */
+    public function raw(Request $request, Entry $entry): Response
+    {
+        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
+            $entry->update(['state' => State::Deleted()]);
+        }
+
+        abort_if($entry->state != State::Active(), 404);
+
+        if (strlen($entry->password) > 0) {
+            abort_if(!Hash::check($request->password, $entry->password), 403);
+        }
+
+        return response($entry->content, 200)->header('Content-Type', 'text/plain');
     }
 
     /**

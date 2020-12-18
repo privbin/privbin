@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('\App\Http\Controllers')->name('web.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home.index');
     Route::get('/s/{entry}', 'EntryController@show')->name('entry.show');
+    Route::get('/s/{entry}/raw', 'EntryController@raw')->name('entry.raw');
     Route::post('/a/{entry}', 'EntryController@access')->name('entry.access');
     Route::post('/store', 'EntryController@store')->name('entry.store');
     Route::delete('/d/{entry}', 'EntryController@destroy')->name('entry.destroy');

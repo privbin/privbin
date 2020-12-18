@@ -6,7 +6,12 @@
                 {!! session()->get('alert') !!}
             </div>
         @endif
-        <div class="border p-2 mt-4">
+        <div class="clearfix mt-4 mb-1">
+            <a target="_blank" href="{{ route('web.entry.raw', $entry) }}" class="float-end btn btn-sm btn-dark px-3">
+                {{ __('privbin.raw') }}
+            </a>
+        </div>
+        <div class="border p-2">
             @if ($entry->type == \App\Enums\EntryType::Markdown())
                 {!! (new \League\CommonMark\CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false, 'max_nesting_level' => 25]))->convertToHtml($entry->content) !!}
             @else
