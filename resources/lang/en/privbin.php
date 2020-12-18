@@ -9,6 +9,7 @@ return [
     'view' => 'View',
     'token' => 'Token',
     'delete' => 'Delete',
+    'raw' => 'Raw',
 
     'expires' => 'Expires',
     'expire_after_minute_5' => 'After 5 minutes',
