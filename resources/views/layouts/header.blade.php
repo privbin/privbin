@@ -20,13 +20,13 @@
                         {{ __('privbin.expires') }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-3 expires-selector" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item expires-item" data-selected data-value="minute5" href="#">{{ __('privbin.expire_after', ['time' => '5 minutes']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="minute15" href="#">{{ __('privbin.expire_after', ['time' => '15 minutes']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="minute30" href="#">{{ __('privbin.expire_after', ['time' => '30 minutes']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="hour1" href="#">{{ __('privbin.expire_after', ['time' => '1 hour']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="hour3" href="#">{{ __('privbin.expire_after', ['time' => '3 hour']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="hour6" href="#">{{ __('privbin.expire_after', ['time' => '6 hour']) }}</a></li>
-                        <li><a class="dropdown-item expires-item" data-value="day1" href="#">{{ __('privbin.expire_after', ['time' => '1 day']) }}</a></li>
+                        @foreach(\App\Enums\Expire::asArray() as $expire)
+                            <li>
+                                <a class="dropdown-item expires-item" data-selected data-value="{{ $expire }}" href="#">
+                                    {{ __('privbin.expire_after_'.$expire) }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
             </ul>
