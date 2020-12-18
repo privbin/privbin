@@ -102,12 +102,14 @@ class EntryController extends Controller
      *
      * @param Request $request
      * @param Entry $entry
-     * @param string $token
      * @return RedirectResponse
      */
-    public function destroy(Request $request, Entry $entry, string $token): RedirectResponse
+    public function destroy(Request $request, Entry $entry): RedirectResponse
     {
-        abort_if($entry->delete_uuid != $token, 403);
+        $request->validate([
+            'token' => 'required|string|min:2',
+        ]);
+        abort_if($entry->delete_uuid != $request->token, 403);
         $entry->update(['state' => State::Deleted()]);
         return \response()->redirectToRoute('web.home.index');
     }
