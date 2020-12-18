@@ -25,8 +25,9 @@ class EntryRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:'.implode(',', EntryType::asArray()),
+            'expires' => 'required',
             'password' => 'sometimes|nullable|min:3|max:255|string',
+            'format' => 'required|in:'.implode(',', EntryType::asArray()),
             'content' => 'required|min:1|string',
         ];
     }
