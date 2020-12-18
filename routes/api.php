@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('\App\Http\Controllers')->name('api.')->group(function () {
+    Route::get('/entry/{entry}/show', 'ApiController@show')->name('entry.show');
+    Route::post('/entry/store', 'ApiController@store')->name('entry.store');
+    Route::delete('/entry/{entry}/destroy', 'ApiController@destroy')->name('entry.destroy');
 });
