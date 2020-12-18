@@ -35,12 +35,4 @@ class Entry extends Model
         'state' => State::class,
         'type' => EntryType::class,
     ];
-
-    /**
-     * @return HasMany
-     */
-    public function keys(): HasMany
-    {
-        return $this->hasMany(EntryKey::class, 'entry_id', 'id');
-    }
 }
