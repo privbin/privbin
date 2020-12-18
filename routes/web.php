@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('\App\Http\Controllers')->name('web.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home.index');
+    Route::post('/store', 'EntryController@store')->name('entry.store');
 });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <form action="#" method="post">
+    <form action="{{ route('web.entry.store') }}" method="post">
         @csrf
         <div class="container">
             @foreach($errors->all() as $error)
