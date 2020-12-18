@@ -16,7 +16,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/telescope": "^4.3",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "league/commonmark": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
