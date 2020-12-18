@@ -16,17 +16,17 @@
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown dropdown-hover">
-                    <a class="nav-link btn btn-sm btn-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link btn btn-sm btn-dark expires-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ __('privbin.expires') }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-3" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '5 minutes']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '15 minutes']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '30 minutes']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '1 hour']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '3 hour']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '6 hour']) }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ __('privbin.expire_after', ['time' => '1 day']) }}</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-3 expires-selector" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item expires-item" data-selected data-value="minute5" href="#">{{ __('privbin.expire_after', ['time' => '5 minutes']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="minute15" href="#">{{ __('privbin.expire_after', ['time' => '15 minutes']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="minute30" href="#">{{ __('privbin.expire_after', ['time' => '30 minutes']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="hour1" href="#">{{ __('privbin.expire_after', ['time' => '1 hour']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="hour3" href="#">{{ __('privbin.expire_after', ['time' => '3 hour']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="hour6" href="#">{{ __('privbin.expire_after', ['time' => '6 hour']) }}</a></li>
+                        <li><a class="dropdown-item expires-item" data-value="day1" href="#">{{ __('privbin.expire_after', ['time' => '1 day']) }}</a></li>
                     </ul>
                 </li>
             </ul>

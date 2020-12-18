@@ -8,6 +8,7 @@
                     {{ $error }}
                 </div>
             @endforeach
+            <input type="hidden" name="expires" value="minute5" class="expires-value">
             <div class="mb-3">
                 <div class="row">
                     <div class="col-12 col-md-6">

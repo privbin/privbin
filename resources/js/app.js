@@ -34,5 +34,22 @@ $(function () {
             }, 500);
         });
     });
+
+    $('.expires-selector').each(function () {
+        const $this = $(this);
+        $this.find('.expires-item').click(function (event) {
+            event.preventDefault();
+            const $value = $(this).data('value');
+            const $text = $(this).text();
+            $('.expires-text').text($text);
+            $('.expires-value').val($value);
+        });
+        $this.find('.expires-item[data-selected]').each(function () {
+            const $value = $(this).data('value');
+            const $text = $(this).text();
+            $('.expires-text').text($text);
+            $('.expires-value').val($value);
+        });
+    });
 });
 
