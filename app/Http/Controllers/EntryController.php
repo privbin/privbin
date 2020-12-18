@@ -9,6 +9,7 @@ use App\Models\Entry;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -44,11 +45,17 @@ class EntryController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param \App\Models\Entry $entry
-     * @return \Illuminate\Http\Response
+     * @param Entry $entry
+     * @return Response
      */
-    public function show(Request $request, Entry $entry)
+    public function show(Request $request, Entry $entry): Response
     {
+        abort_if($entry->state != State::Active(), 404);
+
+        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
+            $entry->update(['state' => State::Deleted()]);
+        }
+
         if (strlen($entry->password) > 0) {
             if (session()->get('entry.access.'.$entry->uuid) == $entry->password) {
                 goto SHOW;
@@ -64,6 +71,11 @@ class EntryController extends Controller
         return response()->view('web.entry.show', compact('entry'));
     }
 
+    /**
+     * @param Request $request
+     * @param Entry $entry
+     * @return RedirectResponse|Response
+     */
     public function access(Request $request, Entry $entry)
     {
         $request->validate([
@@ -87,8 +99,8 @@ class EntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Entry  $entry
-     * @return \Illuminate\Http\Response
+     * @param Entry $entry
+     * @return Response
      */
     public function destroy(Entry $entry)
     {

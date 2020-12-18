@@ -39,6 +39,13 @@ class Entry extends Model
     ];
 
     /**
+     * @var string[] $dates
+     */
+    protected $dates = [
+        'expires_at',
+    ];
+
+    /**
      * @return string
      */
     public function getRouteKeyName(): string
