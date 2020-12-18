@@ -38,6 +38,7 @@ class EntryController extends Controller
             'expires_at' => $expires,
         ]);
 
+        session()->flash('alert', __('privbin.entry_created', ['show' => route('web.entry.show', $entry), 'destroy' => route('web.entry.destroy', $entry)]));
         return response()->redirectToRoute('web.entry.show', $entry);
     }
 
