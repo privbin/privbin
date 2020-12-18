@@ -100,11 +100,15 @@ class EntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Entry $entry
-     * @return Response
+     * @param string $token
+     * @return RedirectResponse
      */
-    public function destroy(Entry $entry)
+    public function destroy(Request $request, Entry $entry, string $token): RedirectResponse
     {
-        //
+        abort_if($entry->delete_uuid != $token, 403);
+        $entry->update(['state' => State::Deleted()]);
+        return \response()->redirectToRoute('web.home.index');
     }
 }
