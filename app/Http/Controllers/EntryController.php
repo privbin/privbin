@@ -6,6 +6,7 @@ use App\Enums\EntryType;
 use App\Enums\State;
 use App\Http\Requests\EntryRequest;
 use App\Models\Entry;
+use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -49,13 +50,37 @@ class EntryController extends Controller
     public function show(Request $request, Entry $entry)
     {
         if (strlen($entry->password) > 0) {
-            if (session()->has('entry.access.'.$entry->uuid)) {
-                if (session()->get('entry.access'.$entry->uuid) == $entry->password) {
-                    return response()->view('web.entry.show', compact('entry'));
-                }
+            if (session()->get('entry.access.'.$entry->uuid) == $entry->password) {
+                goto SHOW;
+            }
+            else if (session()->get('entry.access.'.$entry->uuid) == 'viewed') {
+                session()->flash('alert', __('privbin.again_required_password'));
             }
             return response()->view('web.entry.access', compact('entry'));
         }
+
+        SHOW:
+        session()->put('entry.access.'.$entry->uuid, 'viewed');
+        return response()->view('web.entry.show', compact('entry'));
+    }
+
+    public function access(Request $request, Entry $entry)
+    {
+        $request->validate([
+            'password' => 'required',
+        ]);
+
+        if (strlen($entry->password) > 0) {
+            if (Hash::check($request->password, $entry->password)) {
+                session()->put('entry.access.'.$entry->uuid, $entry->password);
+                return response()->redirectToRoute('web.entry.show', $entry);
+            }
+
+            return back()->withErrors([
+                __('privbin.wrong_password'),
+            ]);
+        }
+
         return response()->view('web.entry.show', compact('entry'));
     }
 
