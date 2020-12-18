@@ -42,12 +42,21 @@ class EntryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Entry  $entry
+     * @param Request $request
+     * @param \App\Models\Entry $entry
      * @return \Illuminate\Http\Response
      */
-    public function show(Entry $entry)
+    public function show(Request $request, Entry $entry)
     {
-        //
+        if (strlen($entry->password) > 0) {
+            if (session()->has('entry.access.'.$entry->uuid)) {
+                if (session()->get('entry.access'.$entry->uuid) == $entry->password) {
+                    return response()->view('web.entry.show', compact('entry'));
+                }
+            }
+            return response()->view('web.entry.access', compact('entry'));
+        }
+        return response()->view('web.entry.show', compact('entry'));
     }
 
     /**

@@ -9,26 +9,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link btn btn-sm btn-dark" aria-current="page" href="#">
+                    <a class="nav-link btn btn-sm btn-dark" aria-current="page" href="{{ route('web.home.index') }}">
                         {{ __('privbin.new') }}
                     </a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown dropdown-hover">
-                    <a class="nav-link btn btn-sm btn-dark expires-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ __('privbin.expires') }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-3 expires-selector" aria-labelledby="navbarDropdown">
-                        @foreach(\App\Enums\Expire::asArray() as $expire)
-                            <li>
-                                <a class="dropdown-item expires-item" data-selected data-value="{{ $expire }}" href="#">
-                                    {{ __('privbin.expire_after_'.$expire) }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
+                @if (isset($expire) && $expire == true)
+                    <li class="nav-item dropdown dropdown-hover">
+                        <a class="nav-link btn btn-sm btn-dark expires-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ __('privbin.expires') }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark mt-3 expires-selector" aria-labelledby="navbarDropdown">
+                            @foreach(\App\Enums\Expire::asArray() as $expire)
+                                <li>
+                                    <a class="dropdown-item expires-item" data-selected data-value="{{ $expire }}" href="#">
+                                        {{ __('privbin.expire_after_'.$expire) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

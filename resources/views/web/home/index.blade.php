@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['expire' => true])
 @section('content')
     <form action="{{ route('web.entry.store') }}" method="post">
         @csrf
