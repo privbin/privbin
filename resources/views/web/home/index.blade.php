@@ -19,8 +19,11 @@
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
                             <select name="format" class="form-select" id="format">
-                                <option value="plain_text" selected>{{ __('privbin.plain_text') }}</option>
-                                <option value="markdown">{{ __('privbin.markdown') }}</option>
+                                @foreach (\App\Enums\EntryType::asArray() as $type)
+                                    <option value="{{ $type }}" {{ $loop->first ? 'selected' : '' }}>
+                                        {{ __('privbin.'.$type) }}
+                                    </option>
+                                @endforeach
                             </select>
                             <label for="format">{{ __('privbin.format') }}</label>
                         </div>
