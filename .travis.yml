@@ -16,7 +16,7 @@ before_install:
   - mysql -e 'CREATE DATABASE privbin;'
 
 script:
-  - php artisan test
+  - phpunit
 
 services:
   - mysql
