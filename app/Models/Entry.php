@@ -24,7 +24,7 @@ class Entry extends Model
         'uuid',
         'delete_uuid',
         'state',
-        'type',
+        'compiler',
         'password',
         'content',
         'expires_at',
@@ -35,7 +35,6 @@ class Entry extends Model
      */
     protected $casts = [
         'state' => State::class,
-        'type' => EntryType::class,
     ];
 
     /**

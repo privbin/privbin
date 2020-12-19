@@ -136,7 +136,7 @@ php artisan serve --host=127.0.0.1 --port=8000
 
     **Required:**
 
-    `format=[plain_text|markdown]`
+    `format=[string]`
 
     **Required:**
 

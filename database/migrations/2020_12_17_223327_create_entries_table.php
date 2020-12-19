@@ -18,7 +18,7 @@ class CreateEntriesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->uuid('delete_uuid')->unique();
             $table->enum('state', \App\Enums\State::asArray())->default(\App\Enums\State::Active());
-            $table->enum('type', \App\Enums\EntryType::asArray())->default(\App\Enums\EntryType::PlainText());
+            $table->string('compiler')->nullable()->default(null);
             $table->string('password')->nullable()->default(null);
             $table->longText('content');
             $table->timestamp('expires_at')->nullable()->default(null);

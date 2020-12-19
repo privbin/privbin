@@ -12,10 +12,17 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * @var PluginSystem $pluginSystem
+     */
     public PluginSystem $pluginSystem;
 
+    /**
+     * Controller constructor.
+     */
     public function __construct()
     {
         $this->pluginSystem = new PluginSystem;
+        $this->pluginSystem->autoload(base_path('plugins'));
     }
 }

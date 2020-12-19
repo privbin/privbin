@@ -20,9 +20,12 @@
                     <div class="col-12 col-md-6">
                         <div class="form-floating">
                             <select name="format" class="form-select" id="format">
-                                @foreach (\App\Enums\EntryType::asArray() as $type)
-                                    <option value="{{ $type }}" {{ $loop->first ? 'selected' : '' }}>
-                                        {{ __('privbin.'.$type) }}
+                                <option value="plain_text" selected>
+                                    {{ __('privbin.plain_text') }}
+                                </option>
+                                @foreach ($compilers as $compiler)
+                                    <option value="{{ $compiler::class }}">
+                                        {{ __('privbin.'.$compiler->compilerName) }}
                                     </option>
                                 @endforeach
                             </select>

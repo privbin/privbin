@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\EntryType;
 use App\Enums\State;
 use App\Http\Requests\EntryRequest;
+use App\Models\ContentType;
 use App\Models\Entry;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Http\RedirectResponse;
@@ -32,6 +32,10 @@ class EntryController extends Controller
      */
     public function store(EntryRequest $request): RedirectResponse
     {
+        $request->validate([
+            'format' => 'required|in:'.implode(',', ContentType::classes($this->pluginSystem)->toArray()),
+        ]);
+
         $expires = $request->post('expires');
         $expires = explode('_', $expires);
         $expires = Carbon::make("+{$expires[1]} {$expires[0]}");
@@ -40,7 +44,7 @@ class EntryController extends Controller
             'uuid' => Str::uuid(),
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
-            'type' => $request->post('format'),
+            'compiler' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
             'content' => $request->post('content'),
             'expires_at' => $expires,
@@ -77,7 +81,12 @@ class EntryController extends Controller
 
         SHOW:
         session()->put('entry.access.'.$entry->uuid, 'viewed');
-        return response()->view('web.entry.show', compact('entry'));
+        $compiler = $entry->compiler;
+        $content = $entry->content;
+        if ($compiler != null) {
+            $content = $compiler::compile($content);
+        }
+        return response()->view('web.entry.show', compact('entry', 'content'));
     }
 
     /**

@@ -30,7 +30,7 @@ class EntryFactory extends Factory
             'uuid' => Str::uuid(),
             'delete_uuid' => Str::uuid(),
             'state' => State::getRandomValue(),
-            'type' => EntryType::getRandomValue(),
+            'compiler' => null,
             'password' => rand(0, 1) ? Hash::make('password') : null,
             'content' => $this->faker->text,
             'expires_at' => Carbon::make('+'.rand(0, 59).' minutes'),

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\EntryType;
 use App\Enums\Expire;
+use App\Models\ContentType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EntryRequest extends FormRequest
@@ -28,7 +29,6 @@ class EntryRequest extends FormRequest
         return [
             'expires' => 'required|in:'.implode(',', Expire::asArray()),
             'password' => 'sometimes|nullable|min:3|max:255|string',
-            'format' => 'required|in:'.implode(',', EntryType::asArray()),
             'content' => 'required|min:1|string',
         ];
     }

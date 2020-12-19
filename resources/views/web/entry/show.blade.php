@@ -12,11 +12,7 @@
             </a>
         </div>
         <div class="border p-2">
-            @if ($entry->type == \App\Enums\EntryType::Markdown())
-                {!! (new \League\CommonMark\CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false, 'max_nesting_level' => 25]))->convertToHtml($entry->content) !!}
-            @else
-                <pre style="min-height: 240px" class="m-0">{{ $entry->content }}</pre>
-            @endif
+            {!! $content !!}
         </div>
         <div class="clearfix mt-4">
             <form action="{{ route('web.entry.destroy', $entry) }}" method="post">

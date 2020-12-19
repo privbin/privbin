@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\State;
 use App\Http\Requests\EntryRequest;
+use App\Models\ContentType;
 use App\Models\Entry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,10 @@ class ApiController extends Controller
      */
     public function store(EntryRequest $request): JsonResponse
     {
+        $request->validate([
+            'format' => 'required|in:'.implode(',', ContentType::classes($this->pluginSystem)->toArray()),
+        ]);
+
         $expires = $request->post('expires');
         $expires = explode('_', $expires);
         $expires = Carbon::make("+{$expires[1]} {$expires[0]}");
@@ -37,7 +42,7 @@ class ApiController extends Controller
             'uuid' => Str::uuid(),
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
-            'type' => $request->post('format'),
+            'compiler' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
             'content' => $request->post('content'),
             'expires_at' => $expires,

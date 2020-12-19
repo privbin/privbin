@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContentType;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class HomeController extends Controller
 {
@@ -16,10 +18,11 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
-        return response()->view('web.home.index');
+        $compilers = ContentType::plugins($this->pluginSystem);
+        return response()->view('web.home.index', compact('compilers'));
     }
 }
