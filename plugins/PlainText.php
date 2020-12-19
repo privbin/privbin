@@ -39,6 +39,6 @@ class PlainText extends Plugin
      */
     public static function compile(Request $request, string $text): string
     {
-        return '<pre><code>'.$text.'</code></pre>';
+        return '<pre class="p-2"><code>'.$text.'</code></pre>';
     }
 }

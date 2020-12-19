@@ -45,6 +45,6 @@ class MarkdownCompiler extends Plugin
             'allow_unsafe_links' => false,
             'max_nesting_level' => 25,
         ]);
-        return $commonMarkConverter->convertToHtml($text);
+        return '<div class="p-2" style="font-family: sans-serif">'.$commonMarkConverter->convertToHtml($text).'</pre>';
     }
 }
