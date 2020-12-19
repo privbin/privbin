@@ -6,7 +6,7 @@
                 {!! session()->get('alert') !!}
             </div>
         @endif
-        <iframe class="my-3" src="{{ route('web.entry.embed', $entry) }}" frameborder="0" style="width: 100%"></iframe>
+        <iframe class="my-3" src="{{ route('web.entry.embed', $entry).'?theme=dark&'.http_build_query(request()->all()) }}" frameborder="0" style="width: 100%"></iframe>
         <div class="clearfix mt-4">
             <form action="{{ route('web.entry.destroy', $entry) }}" method="post">
                 @csrf

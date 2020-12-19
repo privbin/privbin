@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use \IsaEken\PluginSystem\Plugin;
 use \League\CommonMark\CommonMarkConverter;
 
@@ -33,10 +34,11 @@ class MarkdownCompiler extends Plugin
     /**
      * Compile text to markdown
      *
+     * @param Request $request
      * @param string $text
      * @return string
      */
-    public static function compile(string $text): string
+    public static function compile(Request $request, string $text): string
     {
         $commonMarkConverter = new CommonMarkConverter([
             'html_input' => 'escape',

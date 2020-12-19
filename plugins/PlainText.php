@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use \IsaEken\PluginSystem\Plugin;
 
 class PlainText extends Plugin
@@ -32,10 +33,11 @@ class PlainText extends Plugin
     /**
      * Returns plain text
      *
+     * @param Request $request
      * @param string $text
      * @return string
      */
-    public static function compile(string $text): string
+    public static function compile(Request $request, string $text): string
     {
         return '<pre><code>'.$text.'</code></pre>';
     }

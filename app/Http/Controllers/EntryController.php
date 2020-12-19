@@ -85,7 +85,7 @@ class EntryController extends Controller
         $compiler = $entry->compiler;
         $content = $entry->content;
         if ($compiler != null) {
-            $content = $compiler::compile($content);
+            $content = $compiler::compile($request, $content);
         }
         return response()->view('web.entry.show', compact('entry', 'content'));
     }
@@ -110,11 +110,12 @@ class EntryController extends Controller
         $compiler = $entry->compiler;
         $content = $entry->content;
         if ($compiler != null) {
-            $content = $compiler::compile($content);
+            $content = $compiler::compile($request, $content);
         }
 
         app('debugbar')->disable();
-        return response()->view('web.entry.embed', compact('entry', 'content'));
+        $dark = $request->get('theme') == 'dark';
+        return response()->view('web.entry.embed', compact('entry', 'content', 'dark'));
     }
 
     /**

@@ -24,22 +24,21 @@
         }
     </style>
 </head>
-<body>
-    <div class="card m-0 w-100">
+<body class="{{ $dark == true ? 'bg-dark text-light' : '' }}">
+    <div class="card {{ $dark == true ? 'bg-dark border-gray-800' : '' }} m-0 w-100">
         <div class="card-body p-0" style="width: 100%; overflow-x: auto">
-            {!! $content !!}
-        </div>
-        <div class="card-footer text-gray-600 small">
-            <div class="row">
-                <div class="col my-auto">
-                    Hosted with <span class="text-danger">❤</span> by <a href="{{ route('web.home.index') }}" target="_blank" class="text-decoration-none text-gray-700">{{ config('app.name') }}</a>
-                </div>
-                <div class="col-auto my-auto">
-                    <a href="{{ route('web.entry.raw', $entry) }}" target="_blank" class="btn btn-sm">
-                        View Raw
-                    </a>
-                </div>
+            <div class="highlighter {{ $dark == true ? 'dark' : '' }}">
+                {!! $content !!}
             </div>
+        </div>
+        <div class="card-footer {{ $dark == true ? 'bg-dark text-gray-500' : 'text-gray-600' }} small text-gray-600" style="padding: 10px; overflow: hidden; font-size: 12px">
+            <a href="{{ route('web.entry.raw', $entry) }}" target="_blank" class="float-end text-decoration-none text-gray-600" style="font-weight: 600">
+                view raw
+            </a>
+            Hosted with ❤ by
+            <a href="{{ route('web.home.index') }}" target="_blank" class="text-decoration-none text-gray-600" style="font-weight: 600">
+                {{ config('app.name', 'PrivBin') }}
+            </a>
         </div>
     </div>
 </body>

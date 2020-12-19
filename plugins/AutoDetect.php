@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use \IsaEken\PluginSystem\Plugin;
 
 class AutoDetect extends Plugin
@@ -32,11 +33,15 @@ class AutoDetect extends Plugin
     /**
      * Find language and highlight text
      *
+     * @param Request $request
      * @param string $text
      * @return string
      */
-    public static function compile(string $text): string
+    public static function compile(Request $request, string $text): string
     {
+        $highlightedLine = null;
+        if ($request->has('highlight')) $highlightedLine = (int) $request->highlight;
+
         $highlighter = new \Highlight\Highlighter;
         try {
             $highlighted = $highlighter->highlightAuto($text);
@@ -44,7 +49,7 @@ class AutoDetect extends Plugin
             $response = '<table>';
             $response.= '<tbody>';
             foreach ($lines as $number => $line) {
-                $response.= '<tr>';
+                $response.= '<tr class="'.($highlightedLine === $number ? 'highlighted' : '').'">';
                 $response.= "<td id=\"L{$number}\" data-line-number=\"{$number}\"></td>";
                 $response.= "<td id=\"LC{$number}\" class=\"blob-code\"><pre><code>{$line}</code></pre></td>";
                 $response.= '</tr>';
