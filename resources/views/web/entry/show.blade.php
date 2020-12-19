@@ -6,15 +6,7 @@
                 {!! session()->get('alert') !!}
             </div>
         @endif
-        <div class="clearfix mt-4 mb-1">
-            <a target="_blank" href="{{ route('web.entry.raw', $entry) }}" class="float-end btn btn-sm btn-dark px-3">
-                {{ __('privbin.raw') }}
-            </a>
-        </div>
         <iframe class="my-3" src="{{ route('web.entry.embed', $entry) }}" frameborder="0" style="width: 100%"></iframe>
-{{--        <div class="border p-2">--}}
-{{--            {!! $content !!}--}}
-{{--        </div>--}}
         <div class="clearfix mt-4">
             <form action="{{ route('web.entry.destroy', $entry) }}" method="post">
                 @csrf
