@@ -55,5 +55,11 @@ $(function () {
     $('iframe').on('load', function() {
         this.style.height = this.contentDocument.body.scrollHeight + 'px';
     });
+
+    $(window).resize(function () {
+        $('iframe').each(function() {
+            this.style.height = this.contentDocument.body.scrollHeight + 'px';
+        });
+    });
 });
 
