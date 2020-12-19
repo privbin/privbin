@@ -22,6 +22,7 @@ return [
 
     'plain_text' => 'Plain Text',
     'markdown' => 'Markdown',
+    'auto_detect' => 'Auto Detect',
 
     'entry_created' => 'Entry created!<br>You can access entry using this address: <a href=":show" target="_blank">:show</a><br>And you can delete your entry directly using token: <kbd>:destroy</kbd>',
     'again_required_password' => 'Password required again.',
