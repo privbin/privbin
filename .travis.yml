@@ -6,10 +6,21 @@ php:
 os: linux
 
 before_script:
-  - composer install
-  - cp .env.example .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - rm .env
+  - cp .env.testing .env
   - php artisan key:generate
+  - php artisan migrate
+
+before_install:
+  - mysql -e 'CREATE DATABASE privbin;'
 
 script:
-  - vendor/bin/phpunit
   - php artisan test
+
+services:
+  - mysql
+
+notifications:
+  email: false
