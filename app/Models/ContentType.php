@@ -50,7 +50,7 @@ class ContentType extends Model
                 continue;
             }
 
-            $plugins->add($plugin::class);
+            $plugins->add(get_class($plugin));
         }
         return $plugins;
     }

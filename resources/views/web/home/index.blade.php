@@ -21,7 +21,7 @@
                         <div class="form-floating">
                             <select name="format" class="form-select" id="format">
                                 @foreach ($compilers as $compiler)
-                                    <option value="{{ $compiler::class }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
+                                    <option value="{{ get_class($compiler) }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
                                         {{ __('privbin.'.$compiler->compilerName) }}
                                     </option>
                                 @endforeach
