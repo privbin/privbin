@@ -30,7 +30,7 @@ class AutoDetect extends Plugin
     public string $compilerName = 'auto_detect';
 
     /**
-     * Compile text to markdown
+     * Find language and highlight text
      *
      * @param string $text
      * @return string
