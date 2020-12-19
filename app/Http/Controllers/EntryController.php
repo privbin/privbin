@@ -17,6 +17,14 @@ use Illuminate\Support\Str;
 class EntryController extends Controller
 {
     /**
+     * EntryController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param EntryRequest $request
