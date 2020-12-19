@@ -94,6 +94,31 @@ class EntryController extends Controller
      * @param Entry $entry
      * @return Response
      */
+    public function embed(Request $request, Entry $entry): Response
+    {
+        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
+            $entry->update(['state' => State::Deleted()]);
+        }
+
+        abort_if($entry->state != State::Active(), 404);
+
+        if (strlen($entry->password) > 0) {
+            abort_if(!Hash::check($request->password, $entry->password), 403);
+        }
+
+        $compiler = $entry->compiler;
+        $content = $entry->content;
+        if ($compiler != null) {
+            $content = $compiler::compile($content);
+        }
+        return response()->view('web.entry.embed', compact('entry', 'content'));
+    }
+
+    /**
+     * @param Request $request
+     * @param Entry $entry
+     * @return Response
+     */
     public function raw(Request $request, Entry $entry): Response
     {
         if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
