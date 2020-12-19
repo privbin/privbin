@@ -8,7 +8,6 @@ os: linux
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  - rm .env
   - cp .env.testing .env
   - php artisan key:generate
   - php artisan migrate
