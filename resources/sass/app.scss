@@ -60,3 +60,31 @@
 
 @import 'scrivohighlighter';
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: sans-serif;
+    width: 100%;
+}
+
+th, td {
+    border: none;
+    overflow: auto;
+}
+
+td[data-line-number] {
+    border-right: 1px solid grey;
+    padding: 0 15px;
+    text-align: right;
+    width: 1%;
+}
+
+td[data-line-number]::before {
+    color: rgba(0, 0, 0, 0.5);
+    content: attr(data-line-number);
+    display: block;
+}
+
+.blob-code {
+    padding: 5px 15px;
+}

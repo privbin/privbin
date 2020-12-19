@@ -51,5 +51,9 @@ $(function () {
             $('.expires-value').val($value);
         });
     });
+
+    $('iframe').on('load', function() {
+        this.style.height = this.contentDocument.body.scrollHeight + 'px';
+    });
 });
 

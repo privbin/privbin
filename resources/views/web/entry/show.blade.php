@@ -11,9 +11,10 @@
                 {{ __('privbin.raw') }}
             </a>
         </div>
-        <div class="border p-2">
-            {!! $content !!}
-        </div>
+        <iframe class="my-3" src="{{ route('web.entry.embed', $entry) }}" frameborder="0" style="width: 100%"></iframe>
+{{--        <div class="border p-2">--}}
+{{--            {!! $content !!}--}}
+{{--        </div>--}}
         <div class="clearfix mt-4">
             <form action="{{ route('web.entry.destroy', $entry) }}" method="post">
                 @csrf

@@ -15,6 +15,8 @@
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
         }
         pre {
             margin: 0;
@@ -23,18 +25,20 @@
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="card-body p-0">
+    <div class="card m-0 w-100">
+        <div class="card-body p-0" style="width: 100%; overflow-x: auto">
             {!! $content !!}
         </div>
-        <div class="card-footer p-1 text-gray-600 small row">
-            <div class="col my-auto">
-                Hosted with <span class="text-danger">❤</span> by <a href="{{ route('web.home.index') }}" target="_blank" class="text-decoration-none text-gray-700">{{ config('app.name') }}</a>
-            </div>
-            <div class="col-auto my-auto">
-                <a href="{{ route('web.entry.raw', $entry) }}" target="_blank" class="btn btn-sm">
-                    View Raw
-                </a>
+        <div class="card-footer text-gray-600 small">
+            <div class="row">
+                <div class="col my-auto">
+                    Hosted with <span class="text-danger">❤</span> by <a href="{{ route('web.home.index') }}" target="_blank" class="text-decoration-none text-gray-700">{{ config('app.name') }}</a>
+                </div>
+                <div class="col-auto my-auto">
+                    <a href="{{ route('web.entry.raw', $entry) }}" target="_blank" class="btn btn-sm">
+                        View Raw
+                    </a>
+                </div>
             </div>
         </div>
     </div>

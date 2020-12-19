@@ -39,7 +39,19 @@ class AutoDetect extends Plugin
     {
         $highlighter = new \Highlight\Highlighter;
         try {
-            return '<pre><code>'.($highlighter->highlightAuto($text)->value).'</code></pre>';
+            $highlighted = $highlighter->highlightAuto($text);
+            $lines = \HighlightUtilities\splitCodeIntoArray($highlighted->value);
+            $response = '<table>';
+            $response.= '<tbody>';
+            foreach ($lines as $number => $line) {
+                $response.= '<tr>';
+                $response.= "<td id=\"L{$number}\" data-line-number=\"{$number}\"></td>";
+                $response.= "<td id=\"LC{$number}\" class=\"blob-code\"><pre><code>{$line}</code></pre></td>";
+                $response.= '</tr>';
+            }
+            $response.= '</tbody>';
+            $response.= '</table>';
+            return $response;
         }
         catch (Exception $exception) {
             return '<pre><code>'.$text.'</code></pre>';

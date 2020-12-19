@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -111,6 +112,8 @@ class EntryController extends Controller
         if ($compiler != null) {
             $content = $compiler::compile($content);
         }
+
+        app('debugbar')->disable();
         return response()->view('web.entry.embed', compact('entry', 'content'));
     }
 
