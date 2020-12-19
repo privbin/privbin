@@ -11,15 +11,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "ext-json": "*",
         "bensampo/laravel-enum": "^3.2",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "isaeken/plugin-system": "^1.0",
         "laravel/framework": "^8.12",
         "laravel/telescope": "^4.3",
         "laravel/tinker": "^2.5",
-        "league/commonmark": "^1.5",
-        "ext-json": "*"
+        "league/commonmark": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
