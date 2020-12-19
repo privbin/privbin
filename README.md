@@ -5,6 +5,8 @@
 
 -------
 
+![screenshot.png](screenshot.png)
+
 ## Getting started
 
 ### Requirements
