@@ -1,6 +1,7 @@
 {
     "name": "isaeken/privbin",
     "type": "project",
+    "version": "v1.0.0",
     "description": "The Private Bin Application.",
     "keywords": [
         "private",
