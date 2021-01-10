@@ -28,4 +28,11 @@ return [
     'again_required_password' => 'Password required again.',
     'wrong_password' => 'Wrong password',
 
+    'login' => 'Login',
+    'register' => 'Register',
+    'email' => 'E-Mail Address',
+    'remember' => 'Remember Me',
+    'invalid_credentials' => 'The provided credentials do not match our records.',
+    'password_confirmation' => 'Password Confirmation',
+    'full_name' => 'Full Name',
 ];
