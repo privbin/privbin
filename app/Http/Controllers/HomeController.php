@@ -25,4 +25,13 @@ class HomeController extends Controller
         $compilers = ContentType::plugins($this->pluginSystem);
         return response()->view('web.home.index', compact('compilers'));
     }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function dashboard(Request $request): Response
+    {
+        return response()->view('web.home.dashboard');
+    }
 }

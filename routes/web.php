@@ -28,3 +28,7 @@ Route::namespace('\App\Http\Controllers')->name('web.')->group(function () {
     Route::post('/store', 'EntryController@store')->name('entry.store');
     Route::delete('/d/{entry}', 'EntryController@destroy')->name('entry.destroy');
 });
+
+Route::namespace('\App\Http\Controllers')->name('admin.')->prefix('/admin')->middleware('admin')->group(function () {
+    Route::get('/', 'HomeController@dashboard')->name('dashboard');
+});
