@@ -14,9 +14,28 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class EntryController extends Controller
 {
+    /**
+     * @param string $content
+     * @param string $uuid
+     * @param string $compiler
+     * @return string
+     */
+    private function generateSlug(string $content, string $uuid, string $compiler): string
+    {
+        $slug = '';
+        $slug .= Str::of($content)->length();
+        $slug .= Str::of(Uuid::fromString($uuid)->getHex()->toString())->substr(2, 10);
+        $slug .= Str::of($content)->length();
+        $slug .= Str::of($compiler)->length();
+        $slug .= rand(0, 10);
+        $slug .= Str::random(3);
+        return $slug;
+    }
+
     /**
      * EntryController constructor.
      */
@@ -41,8 +60,10 @@ class EntryController extends Controller
         $expires = explode('_', $expires);
         $expires = Carbon::make("+{$expires[1]} {$expires[0]}");
 
+        $uuid = Str::uuid();
         $entry = Entry::create([
-            'uuid' => Str::uuid(),
+            'slug' => $this->generateSlug($request->post('content'), $uuid, $request->post('format')),
+            'uuid' => $uuid,
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
             'compiler' => $request->post('format'),

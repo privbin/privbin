@@ -27,6 +27,7 @@ class EntryFactory extends Factory
     public function definition()
     {
         return [
+            'slug' => Str::of($this->faker->text(20).rand(0, 10000))->slug(),
             'uuid' => Str::uuid(),
             'delete_uuid' => Str::uuid(),
             'state' => State::getRandomValue(),

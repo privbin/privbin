@@ -21,6 +21,7 @@ class Entry extends Model
      * @var string[] $fillable
      */
     protected $fillable = [
+        'slug',
         'uuid',
         'delete_uuid',
         'state',
@@ -49,6 +50,6 @@ class Entry extends Model
      */
     public function getRouteKeyName(): string
     {
-        return 'uuid';
+        return 'slug';
     }
 }
