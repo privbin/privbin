@@ -118,7 +118,9 @@ class EntryController extends Controller
             $content = $compiler::compile($request, $content);
         }
 
-        app('debugbar')->disable();
+        if (config('app.env') !== 'production') {
+            app('debugbar')->disable();
+        }
         $dark = $request->get('theme') == 'dark';
         return response()->view('web.entry.embed', compact('entry', 'content', 'dark'));
     }
