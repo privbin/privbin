@@ -1,4 +1,3 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
     dashboard
-@endsection
+</x-app-layout>

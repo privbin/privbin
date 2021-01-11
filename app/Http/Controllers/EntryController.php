@@ -51,7 +51,12 @@ class EntryController extends Controller
             'expires_at' => $expires,
         ]);
 
-        session()->flash('alert', __('privbin.entry_created', ['show' => route('web.entry.show', $entry), 'destroy' => $entry->delete_uuid]));
+        $success = collect();
+        $success->add(__('privbin.entry_created'));
+        $success->add(__('privbin.entry_access_address_text', ['address' => route('web.entry.show', $entry)]));
+        $success->add(__('privbin.entry_destroy_text', ['code' => $entry->delete_uuid]));
+        session()->flash('success', $success);
+
         return response()->redirectToRoute('web.entry.show', $entry);
     }
 

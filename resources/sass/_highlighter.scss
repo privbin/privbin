@@ -24,8 +24,7 @@
     }
 
     td[data-line-number] {
-        border-right: 1px solid $gray-200;
-        color: $gray-600;
+        border-right: 1px solid;
         padding: 1px 10px;
         font-size: 12px;
         line-height: 20px;
@@ -33,6 +32,8 @@
         width: 1%;
         white-space: nowrap;
         vertical-align: top;
+        @apply border-gray-200;
+        @apply text-gray-600;
     }
 
     td[data-line-number]::before {
@@ -51,20 +52,21 @@
     }
 
     tr.highlighted {
-        background-color: $yellow-200;
+        @apply bg-yellow-200;
     }
 
     &.dark {
         tr.highlighted {
-            background-color: $yellow-800;
+            @apply bg-yellow-800;
             td[data-line-number] {
-                color: $gray-400;
+                @apply text-gray-400;
             }
         }
 
         td[data-line-number] {
-            border-right: 1px solid $gray-800;
-            color: $gray-700;
+            border-right: 1px solid;
+            @apply border-gray-800;
+            @apply text-gray-700;
         }
     }
 

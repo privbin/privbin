@@ -1,49 +1,62 @@
-@extends('layouts.app', ['expire' => true])
-@section('content')
+<x-app-layout>
     <form action="{{ route('web.entry.store') }}" method="post">
         @csrf
-        <div class="container">
+        <div class="py-5">
+
             @foreach($errors->all() as $error)
-                <div class="alert alert-danger">
-                    {{ $error }}
+                <div class="text-center py-4">
+                    <div class="block w-full p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                        <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">{{ __('privbin.error') }}</span>
+                        <span class="font-semibold mr-2 text-left flex-auto">{{ $error }}</span>
+                    </div>
                 </div>
             @endforeach
-            <input type="hidden" name="expires" value="minute5" class="expires-value">
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <input name="password" type="password" class="form-control" id="password" placeholder="{{ __('privbin.password') }}">
-                            <label for="password">{{ __('privbin.password') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-floating">
-                            <select name="format" class="form-select" id="format">
-                                @foreach ($compilers as $compiler)
-                                    <option value="{{ get_class($compiler) }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
-                                        {{ __('privbin.'.$compiler->compilerName) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <label for="format">{{ __('privbin.format') }}</label>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="block w-full relative">
+                <label>
+                    <span class="block mx-1 py-2">{{ __('privbin.format') }}</span>
+                    <select name="format" class="text-gray-900 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        @foreach ($compilers as $compiler)
+                            <option value="{{ get_class($compiler) }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
+                                {{ __('privbin.'.$compiler->compilerName) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
             </div>
-            <div class="mb-3">
-                <div class="form-floating">
-                    <textarea name="content" class="form-control" placeholder="{{ __('privbin.content') }}" id="content" style="min-height: 400px"></textarea>
-                    <label for="content">{{ __('privbin.content') }}</label>
-                </div>
+
+            <div class="block w-full relative">
+                <label>
+                    <span class="block mx-1 py-2">{{ __('privbin.content') }}</span>
+                    <textarea name="content" placeholder="{{ __('privbin.content') }}" style="min-height: 300px" class="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">{{ old('content') }}</textarea>
+                </label>
             </div>
-            <div class="mb-3">
-                <div class="clearfix">
-                    <button type="submit" class="btn btn-lg btn-dark px-5 py-2 float-end d-block d-md-inline-block" data-waves>
-                        {{ __('privbin.save') }}
-                    </button>
-                </div>
+
+            <div class="block w-full relative">
+                <label>
+                    <span class="block mx-1 py-2">{{ __('privbin.expires') }}</span>
+                    <select name="expires" class="text-gray-900 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        @foreach(\App\Enums\Expire::asArray() as $expire)
+                            <option value="{{ $expire }}">
+                                {{ __('privbin.expire_after_'.$expire) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+            </div>
+
+            <div class="block w-full relative">
+                <label>
+                    <span class="block mx-1 py-2">{{ __('privbin.password') }}</span>
+                    <input type="password" name="password" placeholder="{{ __('privbin.password') }}" class="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                </label>
+            </div>
+
+            <div class="mt-6 w-full block">
+                <button type="submit" class="block w-full bg-purple-700 hover:bg-purple-600 text-gray-200 font-semibold py-2 px-4 border border-purple-500 rounded shadow transition">
+                    {{ __('privbin.save') }}
+                </button>
             </div>
         </div>
     </form>
-@endsection
+</x-app-layout>

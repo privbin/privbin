@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Enums\EntryType;
 use App\Enums\Expire;
 use App\Enums\State;
 use App\Models\Entry;
@@ -10,6 +9,7 @@ use Faker\Provider\Lorem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
+use Laravel\Telescope\EntryType;
 use Tests\TestCase;
 
 class EntryTest extends TestCase
@@ -20,7 +20,6 @@ class EntryTest extends TestCase
             $response = $this->post('/store', [
                 'expires' => Expire::getRandomValue(),
                 'password' => rand(0, 1) == 0 ? Str::random() : null,
-                'format' => EntryType::getRandomValue(),
                 'content' => Lorem::paragraphs(60, true),
             ]);
             $response->assertStatus(302);

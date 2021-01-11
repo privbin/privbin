@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('\App\Http\Controllers')->prefix('/auth')->group(function () {
-    Route::match(['GET', 'POST'], '/login', 'AuthController@login')->name('login');
-    Route::match(['GET', 'POST'], '/register', 'AuthController@register')->name('register');
-    Route::get('/logout', 'AuthController@logout')->name('logout');
-});
-
 Route::namespace('\App\Http\Controllers')->name('web.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home.index');
     Route::get('/s/{entry}', 'EntryController@show')->name('entry.show');

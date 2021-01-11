@@ -11,10 +11,26 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.config.publicPath = 'public_html';
 mix
+    .setPublicPath('public_html')
     .js('resources/js/app.js', 'public_html/js')
+    // .postCss('resources/css/app.css', 'public_html/css', [
+    //     require('postcss-import'),
+    //     require('tailwindcss'),
+    //     require('autoprefixer'),
+    // ])
     .sass('resources/sass/app.scss', 'public_html/css')
-    .browserSync('http://127.0.0.1:8000/')
-    .webpackConfig(require('./webpack.config'));
+    .options({
+        processCssUrls: false,
+        postCss: [
+            require('postcss-import'),
+            require('tailwindcss'),
+            require('autoprefixer'),
+        ],
+    })
+    .browserSync('127.0.0.1:8000')
+    .disableSuccessNotifications();
 
+if (mix.inProduction()) {
+    mix.version();
+}
