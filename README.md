@@ -16,7 +16,7 @@
 ### Installation
 Clone the project using composer
 ````shell
-composer create-project isaeken/privbin yourbinapp
+composer create-project privbin/privbin yourbinapp
 ````
 Switch to project folder
 ````shell
