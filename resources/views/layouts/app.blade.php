@@ -21,7 +21,7 @@
     </head>
     <body class="bg-gray-700 text-gray-200 font-sans antialiased">
         @include('layouts.header')
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="mx-auto px-2 sm:px-6 lg:px-8">
             {{ $slot }}
         </div>
         @include('layouts.footer')
