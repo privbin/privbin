@@ -187,17 +187,19 @@ class EntryController extends Controller
         ]);
 
         if (strlen($entry->password) > 0) {
+
             if (Hash::check($request->password, $entry->password)) {
-                session()->put('entry.access.'.$entry->uuid, $entry->password);
-                return response()->redirectToRoute('web.entry.show', $entry);
+
+                session()->put("entry.access." . $entry->uuid, $entry->password);
+                return response()->redirectToRoute("web.entry.show", $entry);
             }
 
             return back()->withErrors([
-                __('privbin.wrong_password'),
+                __("privbin.wrong_password"),
             ]);
         }
 
-        return response()->view('web.entry.show', compact('entry'));
+        return response()->view("web.entry.show", compact("entry"));
     }
 
     /**
@@ -212,8 +214,10 @@ class EntryController extends Controller
         $request->validate([
             'token' => 'required|string|min:2',
         ]);
+
         abort_if($entry->delete_uuid != $request->token, 403);
-        $entry->update(['state' => State::Deleted()]);
-        return \response()->redirectToRoute('web.home.index');
+        $entry->update([ "state" => State::Deleted() ]);
+
+        return response()->redirectToRoute("web.home.index");
     }
 }
