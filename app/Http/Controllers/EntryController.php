@@ -106,24 +106,28 @@ class EntryController extends Controller
         abort_if($entry->state != State::Active(), 404);
 
         if (strlen($entry->password) > 0) {
-            if (session()->get('entry.access.'.$entry->uuid) == $entry->password) {
-                goto SHOW;
+            $session_value = session()->get("entry.access." . $entry->uuid);
+
+            if ($session_value != $entry->password) {
+
+                if ($session_value == "viewed") {
+                    session()->flash("alert", __("privbin.again_required_password"));
+                }
+
+                return response()->view("web.entry.access", compact("entry"));
             }
-            else if (session()->get('entry.access.'.$entry->uuid) == 'viewed') {
-                session()->flash('alert', __('privbin.again_required_password'));
-            }
-            return response()->view('web.entry.access', compact('entry'));
         }
 
-        SHOW:
-        session()->put('entry.access.'.$entry->uuid, 'viewed');
+        session()->put("entry.access." . $entry->uuid, "viewed");
+
         $highlighter = Highlighter::highlighter($entry->highlighter, $this->pluginSystem);
         $content = $entry->content;
+
         if ($highlighter !== null) {
             $content = $highlighter::convert($content, $request);
         }
 
-        return response()->view('web.entry.show', compact('entry', 'content'));
+        return response()->view("web.entry.show", compact("entry", "content"));
     }
 
     /**
