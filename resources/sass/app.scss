@@ -3,3 +3,15 @@
 @import 'tailwindcss/utilities';
 
 @import 'highlighter';
+
+.card {
+    @apply bg-gray-800 text-white shadow inline-block rounded;
+}
+
+.card-body {
+    @apply block px-2 py-1;
+}
+
+a {
+    @apply underline text-gray-200 hover:text-gray-300;
+}
