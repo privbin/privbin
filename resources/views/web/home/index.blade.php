@@ -17,7 +17,7 @@
                     <div class="block w-full relative">
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.format') }}</span>
-                            <select name="format" class="text-gray-900 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                            <select name="format" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                 @foreach ($compilers as $compiler)
                                     <option value="{{ get_class($compiler) }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
                                         {{ __('privbin.'.$compiler->compilerName) }}
@@ -30,14 +30,14 @@
                     <div class="block w-full relative">
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.content') }}</span>
-                            <textarea name="content" placeholder="{{ __('privbin.content') }}" style="min-height: 300px" class="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">{{ old('content') }}</textarea>
+                            <textarea name="content" placeholder="{{ __('privbin.content') }}" style="min-height: 300px" class="text-gray-200 bg-gray-800 border-gray-900 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:border-purple-500">{{ old('content') }}</textarea>
                         </label>
                     </div>
 
                     <div class="block w-full relative">
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.expires') }}</span>
-                            <select name="expires" class="text-gray-900 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                            <select name="expires" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                 @foreach(\App\Enums\Expire::asArray() as $expire)
                                     <option value="{{ $expire }}">
                                         {{ __('privbin.expire_after_'.$expire) }}
@@ -50,7 +50,7 @@
                     <div class="block w-full relative">
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.password') }}</span>
-                            <input type="password" name="password" placeholder="{{ __('privbin.password') }}" class="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            <input type="password" name="password" placeholder="{{ __('privbin.password') }}" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none">
                         </label>
                     </div>
 
