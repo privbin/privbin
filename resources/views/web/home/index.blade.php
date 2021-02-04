@@ -28,9 +28,10 @@
                     </div>
 
                     <div class="block w-full relative">
+                        <textarea id="editor_contents" name="content" class="hidden">{{ old('content') }}</textarea>
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.content') }}</span>
-                            <textarea id="editor" name="content" placeholder="{{ __('privbin.content') }}" style="min-height: 300px" class="text-gray-200 bg-gray-800 border-gray-900 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:border-purple-500">{{ old('content') }}</textarea>
+                            <div id="editor" class="text-gray-200 bg-gray-800 border-gray-900 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:border-purple-500">{{ old('content') }}</div>
                         </label>
                     </div>
 
