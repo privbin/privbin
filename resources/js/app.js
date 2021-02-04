@@ -13,7 +13,8 @@ window.require = ace.require;
 
 $(function () {
     if ($("#editor").length > 0) {
-        let editor = ace.edit("editor");
+        let editor_id = "editor";
+        let editor = ace.edit(editor_id);
         ace.config.set('basePath', '/vendor/ace/');
         // editor.setTheme("ace/theme/clouds_midnight");
         editor.setTheme("ace/theme/dracula");
@@ -66,6 +67,10 @@ $(function () {
         editor.setShowInvisibles(true);
         editor.setShowPrintMargin(true);
         editor.setFontSize(16);
+        editor.getSession().on("change", function() {
+            $(`textarea#${editor_id}_contents`).val(editor.getSession().getValue());
+        });
+
         window.editor = editor;
     }
 
