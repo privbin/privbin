@@ -18,7 +18,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "isaeken/plugin-system": "^1.0",
         "laravel/framework": "^8.12",
-        "laravel/jetstream": "^2.0",
+        "laravel/jetstream": "^v2.1.0",
         "laravel/sanctum": "^2.6",
         "laravel/telescope": "^4.3",
         "laravel/tinker": "^2.5",
