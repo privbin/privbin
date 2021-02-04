@@ -7,6 +7,7 @@ use App\Helpers\Highlighter;
 use App\Http\Requests\EntryRequest;
 use App\Interfaces\HighlighterPluginInterface;
 use App\Models\Entry;
+use App\Settings\GeneralSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -57,6 +58,7 @@ class EntryController extends Controller
     {
         $request->validate([
             'format' => 'required|in:'.implode(',', Highlighter::highlighters($this->pluginSystem, true)->toArray()),
+            'expires' => 'required|in:'.implode(',', app(GeneralSettings::class)->expires),
         ]);
 
         $expires = $request->post('expires');
