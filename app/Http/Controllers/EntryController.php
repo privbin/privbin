@@ -52,15 +52,8 @@ class EntryController extends Controller
      */
     public function store(EntryRequest $request) : RedirectResponse
     {
-        $highlighters = Highlighter::highlighters($this->pluginSystem);
-        $highlightersForRequest = collect();
-
-        foreach ($highlighters as $highlighter) {
-            $highlightersForRequest->add($highlighter->getName());
-        }
-
         $request->validate([
-            'format' => 'required|in:'.implode(',', $highlightersForRequest->toArray()),
+            'format' => 'required|in:'.implode(',', Highlighter::highlighters($this->pluginSystem, true)->toArray()),
         ]);
 
         $expires = $request->post('expires');

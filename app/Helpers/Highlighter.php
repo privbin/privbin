@@ -14,12 +14,15 @@ class Highlighter
 {
     /**
      * @param PluginSystem $pluginSystem
+     * @param bool $onlyNames
      * @return Collection
      */
-    public static function highlighters(PluginSystem $pluginSystem) : Collection
+    public static function highlighters(PluginSystem $pluginSystem, bool $onlyNames = false) : Collection
     {
-        if (Cache::has("highlighter-plugins")) {
-            return Cache::get("highlighter-plugins");
+        $cacheKey = "highlighter-plugins-".($onlyNames ?? "" . "onlyNames");
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
         }
 
         $plugins = collect();
@@ -29,10 +32,15 @@ class Highlighter
                 continue;
             }
 
-            $plugins->put(get_class($plugin), $plugin);
+            if ($onlyNames) {
+                $plugins->put(get_class($plugin), $plugin->getName());
+            }
+            else {
+                $plugins->put(get_class($plugin), $plugin);
+            }
         }
 
-        Cache::put("highlighter-plugins", $plugins, Carbon::make("+3 days"));
+        Cache::put($cacheKey, $plugins, Carbon::make("+3 days"));
         return $plugins;
     }
 
