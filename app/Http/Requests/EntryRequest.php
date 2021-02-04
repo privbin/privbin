@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\EntryType;
-use App\Enums\Expire;
-use App\Models\ContentType;
+use App\Helpers\Expires;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EntryRequest extends FormRequest
@@ -14,7 +12,7 @@ class EntryRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
@@ -24,10 +22,10 @@ class EntryRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules() : array
     {
         return [
-            'expires' => 'required|in:'.implode(',', Expire::asArray()),
+            'expires' => 'required|in:'.implode(',', Expires::all()->pluck("name")->toArray()),
             'password' => 'sometimes|nullable|min:3|max:255|string',
             'content' => 'required|min:1|string',
         ];

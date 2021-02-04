@@ -38,9 +38,12 @@
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.expires') }}</span>
                             <select name="expires" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                @foreach(\App\Enums\Expire::asArray() as $expire)
-                                    <option value="{{ $expire }}">
-                                        {{ __('privbin.expire_after_'.$expire) }}
+                                @foreach(\App\Helpers\Expires::all() as $expire)
+                                    <option value="{{ $expire->name }}">
+                                        {{ __($expire->lang) }}
+                                        @foreach($expire->requirements as $requirement)
+                                            ({{ __("expires.requirement_" . $requirement) }})
+                                        @endforeach
                                     </option>
                                 @endforeach
                             </select>

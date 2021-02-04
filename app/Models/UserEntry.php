@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class UserEntry
+ * @package App\Models
+ * @method static create(array $fields)
+ */
 class UserEntry extends Model
 {
     use HasFactory;

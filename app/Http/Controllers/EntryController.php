@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\State;
+use App\Helpers\Expires;
 use App\Helpers\Highlighter;
 use App\Http\Requests\EntryRequest;
 use App\Interfaces\HighlighterPluginInterface;
@@ -59,14 +60,13 @@ class EntryController extends Controller
     {
         $request->validate([
             'format' => 'required|in:'.implode(',', Highlighter::highlighters($this->pluginSystem, true)->toArray()),
-            'expires' => 'required|in:'.implode(',', app(GeneralSettings::class)->expires),
+            'expires' => 'required|in:'.implode(',', Expires::all()->pluck("name")->toArray()),
         ]);
 
-        $expires = $request->post('expires');
-        $expires = explode('_', $expires);
-        $expires = Carbon::make("+{$expires[1]} {$expires[0]}");
-
         $uuid = Str::uuid();
+        $expire = Expires::find($request->post('expires'));
+        abort_if($expire === null, 400);
+
         $entry = Entry::create([
             'slug' => $this->slug($request, $uuid),
             'uuid' => $uuid,
@@ -75,7 +75,7 @@ class EntryController extends Controller
             'highlighter' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
             'content' => $request->post('content'),
-            'expires_at' => $expires,
+            'expires_at' => Carbon::make($expire->time),
         ]);
 
         if (Auth::check()) {
@@ -103,10 +103,6 @@ class EntryController extends Controller
      */
     public function show(Request $request, Entry $entry) : Response
     {
-        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
-            $entry->update(['state' => State::Deleted()]);
-        }
-
         abort_if($entry->state != State::Active(), 404);
 
         if (strlen($entry->password) > 0) {
@@ -137,10 +133,6 @@ class EntryController extends Controller
      */
     public function embed(Request $request, Entry $entry) : Response
     {
-        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
-            $entry->update(['state' => State::Deleted()]);
-        }
-
         abort_if($entry->state != State::Active(), 404);
 
         if (strlen($entry->password) > 0) {
@@ -170,10 +162,6 @@ class EntryController extends Controller
      */
     public function raw(Request $request, Entry $entry): Response
     {
-        if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
-            $entry->update(['state' => State::Deleted()]);
-        }
-
         abort_if($entry->state != State::Active(), 404);
 
         if (strlen($entry->password) > 0) {
