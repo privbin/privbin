@@ -7,11 +7,13 @@ use App\Helpers\Highlighter;
 use App\Http\Requests\EntryRequest;
 use App\Interfaces\HighlighterPluginInterface;
 use App\Models\Entry;
+use App\Models\UserEntry;
 use App\Settings\GeneralSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
@@ -75,6 +77,13 @@ class EntryController extends Controller
             'content' => $request->post('content'),
             'expires_at' => $expires,
         ]);
+
+        if (Auth::check()) {
+            UserEntry::create([
+                "user_id" => Auth::id(),
+                "entry_id" => $entry->id,
+            ]);
+        }
 
         $success = collect();
         $success->add(__('privbin.entry_created'));

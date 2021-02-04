@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -66,8 +66,16 @@ class User extends Authenticatable
     /**
      * @return string
      */
-    public function defaultProfilePhotoUrl(): string
+    public function defaultProfilePhotoUrl() : string
     {
         return str_replace(":hash", md5(Str::of($this->email)->lower()->trim()), "https://www.gravatar.com/avatar/:hash?s=80&d=mp&r=g");
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function entries() : BelongsToMany
+    {
+        return $this->belongsToMany(Entry::class, "user_entries");
     }
 }
