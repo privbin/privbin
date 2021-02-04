@@ -25,11 +25,10 @@ class EntryController extends Controller
      */
     private function slug(Request $request, string $uuid) : string
     {
-        $content = $request->post("content");
         $excepts = Entry::all()->pluck("slug");
 
         $slug = "";
-        $slug .= Str::of($content)->length();
+        $slug .= Str::random(2);
         $slug .= Str::of(Uuid::fromString($uuid)->getHex()->toString())->substr(rand(0, 3), rand(0, 4));
         $slug .= rand(10, 99) . Str::random(3);
 
