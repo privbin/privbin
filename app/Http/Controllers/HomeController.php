@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContentType;
+use App\Helpers\Highlighter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,9 +20,9 @@ class HomeController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request) : Response
     {
-        $highlighters = ContentType::highlighters($this->pluginSystem);
+        $highlighters = Highlighter::highlighters($this->pluginSystem);
         return response()->view('web.home.index', compact('highlighters'));
     }
 
@@ -30,7 +30,7 @@ class HomeController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function dashboard(Request $request): Response
+    public function dashboard(Request $request) : Response
     {
         return response()->view('web.home.dashboard');
     }

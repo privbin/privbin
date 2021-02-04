@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\State;
+use App\Helpers\Highlighter;
 use App\Http\Requests\EntryRequest;
 use App\Interfaces\HighlighterPluginInterface;
-use App\Models\ContentType;
 use App\Models\Entry;
-use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
@@ -25,7 +23,7 @@ class EntryController extends Controller
      * @param string $compiler
      * @return string
      */
-    private function generateSlug(string $content, string $uuid, string $compiler): string
+    private function generateSlug(string $content, string $uuid, string $compiler) : string
     {
         $slug = '';
         $slug .= Str::of($content)->length();
@@ -34,6 +32,7 @@ class EntryController extends Controller
         $slug .= Str::of($compiler)->length();
         $slug .= rand(0, 10);
         $slug .= Str::random(3);
+
         return $slug;
     }
 
@@ -51,10 +50,11 @@ class EntryController extends Controller
      * @param EntryRequest $request
      * @return RedirectResponse
      */
-    public function store(EntryRequest $request): RedirectResponse
+    public function store(EntryRequest $request) : RedirectResponse
     {
-        $highlighters = ContentType::highlighters($this->pluginSystem);
+        $highlighters = Highlighter::highlighters($this->pluginSystem);
         $highlightersForRequest = collect();
+
         foreach ($highlighters as $highlighter) {
             $highlightersForRequest->add($highlighter->getName());
         }
@@ -95,7 +95,7 @@ class EntryController extends Controller
      * @param Entry $entry
      * @return Response
      */
-    public function show(Request $request, Entry $entry): Response
+    public function show(Request $request, Entry $entry) : Response
     {
         if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
             $entry->update(['state' => State::Deleted()]);
@@ -115,11 +115,12 @@ class EntryController extends Controller
 
         SHOW:
         session()->put('entry.access.'.$entry->uuid, 'viewed');
-        $compiler = $entry->compiler;
+        $highlighter = Highlighter::highlighter($entry->highlighter, $this->pluginSystem);
         $content = $entry->content;
-        if ($compiler != null) {
-            $content = $compiler::compile($request, $content);
+        if ($highlighter !== null) {
+            $content = $highlighter::convert($content, $request);
         }
+
         return response()->view('web.entry.show', compact('entry', 'content'));
     }
 
@@ -128,7 +129,7 @@ class EntryController extends Controller
      * @param Entry $entry
      * @return Response
      */
-    public function embed(Request $request, Entry $entry): Response
+    public function embed(Request $request, Entry $entry) : Response
     {
         if ($entry->expires_at->lessThanOrEqualTo(Carbon::now())) {
             $entry->update(['state' => State::Deleted()]);
@@ -141,7 +142,7 @@ class EntryController extends Controller
         }
 
         /** @var HighlighterPluginInterface|null $highlighter */
-        $highlighter = ContentType::highlighter($entry->highlighter, $this->pluginSystem);
+        $highlighter = Highlighter::highlighter($entry->highlighter, $this->pluginSystem);
         $content = $entry->content;
 
         if ($highlighter != null) {
