@@ -25,7 +25,7 @@ class Entry extends Model
         'uuid',
         'delete_uuid',
         'state',
-        'compiler',
+        'highlighter',
         'password',
         'content',
         'expires_at',

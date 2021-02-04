@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\State;
 use App\Http\Requests\EntryRequest;
+use App\Interfaces\HighlighterPluginInterface;
 use App\Models\ContentType;
 use App\Models\Entry;
 use Illuminate\Contracts\Support\MessageProvider;
@@ -52,8 +53,14 @@ class EntryController extends Controller
      */
     public function store(EntryRequest $request): RedirectResponse
     {
+        $highlighters = ContentType::highlighters($this->pluginSystem);
+        $highlightersForRequest = collect();
+        foreach ($highlighters as $highlighter) {
+            $highlightersForRequest->add($highlighter->getName());
+        }
+
         $request->validate([
-            'format' => 'required|in:'.implode(',', ContentType::classes($this->pluginSystem)->toArray()),
+            'format' => 'required|in:'.implode(',', $highlightersForRequest->toArray()),
         ]);
 
         $expires = $request->post('expires');
@@ -66,7 +73,7 @@ class EntryController extends Controller
             'uuid' => $uuid,
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
-            'compiler' => $request->post('format'),
+            'highlighter' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
             'content' => $request->post('content'),
             'expires_at' => $expires,
@@ -133,15 +140,18 @@ class EntryController extends Controller
             abort_if(!Hash::check($request->password, $entry->password), 403);
         }
 
-        $compiler = $entry->compiler;
+        /** @var HighlighterPluginInterface|null $highlighter */
+        $highlighter = ContentType::highlighter($entry->highlighter, $this->pluginSystem);
         $content = $entry->content;
-        if ($compiler != null) {
-            $content = $compiler::compile($request, $content);
+
+        if ($highlighter != null) {
+            $content = $highlighter->convert($content, $request);
         }
 
         if (config('app.env') !== 'production') {
             app('debugbar')->disable();
         }
+
         $dark = $request->get('theme') == 'dark';
         return response()->view('web.entry.embed', compact('entry', 'content', 'dark'));
     }

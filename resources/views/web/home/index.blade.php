@@ -18,9 +18,9 @@
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.format') }}</span>
                             <select name="format" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                @foreach ($compilers as $compiler)
-                                    <option value="{{ get_class($compiler) }}" {{ $compiler->compilerName == 'plain_text' ? 'selected' : '' }}>
-                                        {{ __('privbin.'.$compiler->compilerName) }}
+                                @foreach ($highlighters as $class => $highlighter)
+                                    <option value="{{ $highlighter->getName() }}" {{ $highlighter->getName() == config("app.default_highlighter") ? "selected" : null }}>
+                                        {{ __('highlighters.'.$highlighter->getName()) }}
                                     </option>
                                 @endforeach
                             </select>

@@ -22,8 +22,8 @@ class HomeController extends Controller
      */
     public function index(Request $request): Response
     {
-        $compilers = ContentType::plugins($this->pluginSystem);
-        return response()->view('web.home.index', compact('compilers'));
+        $highlighters = ContentType::highlighters($this->pluginSystem);
+        return response()->view('web.home.index', compact('highlighters'));
     }
 
     /**

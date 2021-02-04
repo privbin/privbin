@@ -34,10 +34,6 @@ return [
     'expire_after_hour_6' => 'After 6 hours',
     'expire_after_day_1' => 'After 1 days',
 
-    'plain_text' => 'Plain Text',
-    'markdown' => 'Markdown',
-    'auto_detect' => 'Auto Detect',
-
     'entry_created' => 'Entry created!',
     'entry_access_address_text' => 'You can access entry using this address: <a href=":address" target="_blank">:address</a>',
     'entry_destroy_text' => 'And you can delete your entry directly using token: <kbd>:code</kbd>',

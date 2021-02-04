@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\HighlighterPluginInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -16,42 +17,43 @@ class ContentType extends Model
      */
     protected $fillable = [
         'name',
-        'compiler',
+        'highlighter',
     ];
 
     /**
      * @param PluginSystem $pluginSystem
      * @return Collection
      */
-    public static function plugins(PluginSystem $pluginSystem): Collection
+    public static function highlighters(PluginSystem $pluginSystem) : Collection
     {
         $plugins = collect();
         foreach ($pluginSystem->plugins as $plugin)
         {
-            if (!isset($plugin->compilerName)) {
+            if (!method_exists(get_class($plugin), "getName") || !($plugin instanceof HighlighterPluginInterface)) {
                 continue;
             }
 
-            $plugins->add($plugin);
+            $plugins->put(get_class($plugin), $plugin);
         }
         return $plugins;
     }
 
     /**
+     * @param string $name
      * @param PluginSystem $pluginSystem
-     * @return Collection
+     * @return HighlighterPluginInterface|null
      */
-    public static function classes(PluginSystem $pluginSystem): Collection
+    public static function highlighter(string $name, PluginSystem $pluginSystem) : ?HighlighterPluginInterface
     {
-        $plugins = collect();
-        foreach ($pluginSystem->plugins as $plugin)
-        {
-            if (!isset($plugin->compilerName)) {
-                continue;
-            }
+        $highlighters = self::highlighters($pluginSystem);
+        $highlighter = null;
 
-            $plugins->add(get_class($plugin));
+        foreach ($highlighters as $class => $item) {
+            if ($item->getName() === $name) {
+                $highlighter = $item;
+            }
         }
-        return $plugins;
+
+        return $highlighter;
     }
 }
