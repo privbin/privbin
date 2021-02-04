@@ -18,20 +18,23 @@ use Ramsey\Uuid\Uuid;
 class EntryController extends Controller
 {
     /**
-     * @param string $content
+     * @param Request $request
      * @param string $uuid
-     * @param string $compiler
      * @return string
      */
-    private function generateSlug(string $content, string $uuid, string $compiler) : string
+    private function slug(Request $request, string $uuid) : string
     {
-        $slug = '';
+        $content = $request->post("content");
+        $excepts = Entry::all()->pluck("slug");
+
+        $slug = "";
         $slug .= Str::of($content)->length();
-        $slug .= Str::of(Uuid::fromString($uuid)->getHex()->toString())->substr(2, 10);
-        $slug .= Str::of($content)->length();
-        $slug .= Str::of($compiler)->length();
-        $slug .= rand(0, 10);
-        $slug .= Str::random(3);
+        $slug .= Str::of(Uuid::fromString($uuid)->getHex()->toString())->substr(rand(0, 3), rand(0, 4));
+        $slug .= rand(10, 99) . Str::random(3);
+
+        if (in_array($slug, $excepts->toArray())) {
+            return $this->slug($request, $uuid);
+        }
 
         return $slug;
     }
@@ -62,7 +65,7 @@ class EntryController extends Controller
 
         $uuid = Str::uuid();
         $entry = Entry::create([
-            'slug' => $this->generateSlug($request->post('content'), $uuid, $request->post('format')),
+            'slug' => $this->slug($request, $uuid),
             'uuid' => $uuid,
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
