@@ -14,6 +14,13 @@
                         </div>
                     @endforeach
 
+                    <div class="block w-full relative mb-3">
+                        <textarea id="editor_contents" name="content" class="hidden">{{ old('content') }}</textarea>
+                        <label>
+                            <div id="editor" class="text-gray-200 bg-gray-800 border-gray-900 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:border-purple-500">{{ old('content') }}</div>
+                        </label>
+                    </div>
+
                     <div class="block w-full relative">
                         <label>
                             <span class="block mx-1 py-2">{{ __('privbin.format') }}</span>
@@ -24,14 +31,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </label>
-                    </div>
-
-                    <div class="block w-full relative">
-                        <textarea id="editor_contents" name="content" class="hidden">{{ old('content') }}</textarea>
-                        <label>
-                            <span class="block mx-1 py-2">{{ __('privbin.content') }}</span>
-                            <div id="editor" class="text-gray-200 bg-gray-800 border-gray-900 appearance-none border-2 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:border-purple-500">{{ old('content') }}</div>
                         </label>
                     </div>
 
@@ -66,13 +65,29 @@
         <div class="w-full overflow-hidden lg:w-4/12 xl:w-3/12 px-0 lg:px-8 py-10">
             <div class="card w-full my-4">
                 <div class="card-body inline-block">
-                    <div class="p-6">
-                        <img src="{{ url("images/welcome.svg") }}" alt="" class="w-full">
-                    </div>
-                    <div class="text-xl mb-2 mx-2">Hi there!</div>
-                    <div class="mb-4 mx-2 text-gray-200">
-                        Please <a href="{{ route("login") }}">login</a> or <a href="{{ route("register") }}">register</a> to save your notes, long time store and more features.
-                    </div>
+                    @auth()
+                        <div class="px-2 py-6 relative z-0" style="min-height: 600px;">
+                            <div class="absolute top-0 bottom-0 left-0 right-0 opacity-25" style="z-index: -1; background-image: url('{{ url("images/notes.svg") }}'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
+                            <div class="text-xl mb-2 mx-2">
+                                Your notes is here!
+                            </div>
+                            @forelse(auth()->user()->entries()->where("state", \App\Enums\State::Active())->get() as $entry)
+                                <div class="my-4">
+                                    <a href="{{ route("web.entry.show", $entry) }}" class="block py-2 px-3 hover:bg-gray-700 hover:bg-opacity-25">{{ $entry->uuid }}</a>
+                                </div>
+                            @empty
+                                <div class="my-4 text-center">You not have any notes.</div>
+                            @endforelse
+                        </div>
+                    @else
+                        <div class="p-6">
+                            <img src="{{ url("images/welcome.svg") }}" alt="" class="w-full">
+                        </div>
+                        <div class="text-xl mb-2 mx-2">Hi there!</div>
+                        <div class="mb-4 mx-2 text-gray-200">
+                            Please <a href="{{ route("login") }}">login</a> or <a href="{{ route("register") }}">register</a> to save your notes, long time store and more features.
+                        </div>
+                    @endauth
                 </div>
             </div>
         </div>
