@@ -15,3 +15,7 @@
 a {
     @apply underline text-gray-200 hover:text-gray-300;
 }
+
+.ace_editor {
+    @apply bg-gray-800 border transition-colors rounded;
+}

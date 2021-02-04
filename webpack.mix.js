@@ -28,6 +28,7 @@ mix
             require('autoprefixer'),
         ],
     })
+    .copy('node_modules/ace-builds/src-min', 'public_html/vendor/ace')
     .browserSync('127.0.0.1:8000')
     .disableSuccessNotifications();
 

@@ -6,8 +6,77 @@ require('alpinejs');
 
 const $ = window.$ = window.jQuery = jQuery = require('jquery/src/jquery');
 const waves = window.waves = require('jquery-waves/src/js/jquery-waves');
+const ace = window.ace = require('ace-builds');
+
+window.define = ace.define;
+window.require = ace.require;
 
 $(function () {
+    if ($("#editor").length > 0) {
+        let editor = ace.edit("editor");
+        ace.config.set('basePath', '/vendor/ace/');
+        // editor.setTheme("ace/theme/clouds_midnight");
+        editor.setTheme("ace/theme/dracula");
+        editor.session.setMode("ace/mode/text");
+        editor.setOptions({
+            selectionStyle: "line",
+            highlightActiveLine: true,
+            highlightSelectedWord: true,
+            readOnly: false,
+            cursorStyle: "wide",
+            behavioursEnabled: true,
+            wrapBehavioursEnabled: true,
+            enableMultiselect: true,
+
+            highlightGutterLine: true,
+            animatedScroll: true,
+            showInvisibles: true,
+            showPrintMargin: true,
+            printMarginColumn: 80,
+            fadeFoldWidgets: true,
+            showFoldWidgets: true,
+            showLineNumbers: true,
+            showGutter: true,
+            displayIndentGuides: true,
+            // fontSize: number or css font-size string
+            // fontFamily: css font-family value
+            maxLines: Infinity, // Infinity
+            minLines: 15,
+
+            firstLineNumber: 1,
+            newLineMode: "auto",
+            tabSize: 4,
+
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
+// the following option requires ext-emmet.js and the emmet library
+            enableEmmet: true,
+// the following option requires ext-elastic_tabstops_lite.js
+            useElasticTabstops: true,
+        });
+        editor.setShowFoldWidgets(true);
+        editor.setAnimatedScroll(true);
+        editor.setAutoScrollEditorIntoView(true);
+        editor.setBehavioursEnabled(true);
+        editor.setDisplayIndentGuides(true);
+        editor.setHighlightActiveLine(true);
+        editor.setHighlightGutterLine(true);
+        editor.setHighlightSelectedWord(true);
+        editor.setShowInvisibles(true);
+        editor.setShowPrintMargin(true);
+        editor.setFontSize(16);
+        window.editor = editor;
+    }
+
+    $('textarea.ace_text-input').focus(function () {
+        $(this).parent('.ace_editor').addClass("border-purple-500").removeClass("border-gray-900");
+    }).blur(function () {
+        $(this).parent('.ace_editor').removeClass("border-purple-500").addClass("border-gray-900");
+    });
+
+    $('.ace_editor').addClass("border-gray-900");
+
     $('iframe').on('load', function() {
         this.style.height = this.contentDocument.body.scrollHeight + 'px';
     });

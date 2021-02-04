@@ -37,5 +37,7 @@
         "tailwindcss": "^2.0.2",
         "vue-template-compiler": "^2.6.12"
     },
-    "dependencies": {}
+    "dependencies": {
+        "ace-builds": "^1.4.12"
+    }
 }
