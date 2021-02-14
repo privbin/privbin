@@ -17,6 +17,7 @@
                     <a href="{{ route('web.home.index') }}">
                         <img class="block lg:hidden h-8 w-auto" src="{{ asset('images/logo.svg') }}" alt="{{ config('app.name') }}">
                         <img class="hidden lg:block h-8 w-auto" src="{{ asset('images/logo-text.svg') }}" alt="{{ config('app.name') }}">
+                        <span class="absolute mt-4 rounded-lg px-1 bg-purple-700 text-gray-100 font-bold text-xs">BETA</span>
                     </a>
                 </div>
                 <div class="hidden sm:block sm:ml-6">
