@@ -36,6 +36,13 @@
 
                     <div class="block w-full relative">
                         <label>
+                            <span class="block mx-1 py-2">{{ __("privbin.title") }}</span>
+                            <input name="title" type="text" placeholder="{{ __("privbin.title") }}" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        </label>
+                    </div>
+
+                    <div class="block w-full relative">
+                        <label>
                             <span class="block mx-1 py-2">{{ __('privbin.expires') }}</span>
                             <select name="expires" class="text-gray-200 bg-gray-800 border-gray-900 focus:border-purple-500 block appearance-none w-full border px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                 @foreach(\App\Helpers\Expires::all() as $expire)
@@ -76,7 +83,9 @@
                             </div>
                             @forelse(auth()->user()->entries()->where("state", \App\Enums\State::Active())->get() as $entry)
                                 <div class="my-4">
-                                    <a href="{{ route("web.entry.show", $entry) }}" class="block py-2 px-3 hover:bg-gray-700 hover:bg-opacity-25">{{ $entry->uuid }}</a>
+                                    <a href="{{ route("web.entry.show", $entry) }}" class="block py-2 px-3 hover:bg-gray-700 hover:bg-opacity-25 waves-effect w-full">
+                                        {{ $entry->title ?? $entry->slug }}
+                                    </a>
                                 </div>
                             @empty
                                 <div class="my-4 text-center">You not have any notes.</div>

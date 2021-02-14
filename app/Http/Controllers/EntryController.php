@@ -61,6 +61,7 @@ class EntryController extends Controller
         $request->validate([
             'format' => 'required|in:'.implode(',', Highlighter::highlighters($this->pluginSystem, true)->toArray()),
             'expires' => 'required|in:'.implode(',', Expires::all()->pluck("name")->toArray()),
+            'title' => 'nullable|string|min:2|max:64',
         ]);
 
         $uuid = Str::uuid();
@@ -72,6 +73,7 @@ class EntryController extends Controller
             'uuid' => $uuid,
             'delete_uuid' => Str::uuid(),
             'state' => State::Active(),
+            'title' => $request->post("title"),
             'highlighter' => $request->post('format'),
             'password' => strlen($request->post('password')) > 0 ? Hash::make($request->post('password')) : null,
             'content' => $request->post('content'),

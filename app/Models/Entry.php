@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
  * @property string $uuid
  * @property string $delete_uuid
  * @property State $state
+ * @property string $title
  * @property string $highlighter
  * @property string $password
  * @property string $content
@@ -38,6 +39,7 @@ class Entry extends Model
         'uuid',
         'delete_uuid',
         'state',
+        'title',
         'highlighter',
         'password',
         'content',

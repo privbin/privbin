@@ -2,6 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import '~jquery-waves/src/scss/variables';
+@import '~jquery-waves/src/scss/jquery-waves';
 @import 'highlighter';
 
 .card {
