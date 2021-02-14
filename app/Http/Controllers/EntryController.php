@@ -68,6 +68,12 @@ class EntryController extends Controller
         $expire = Expires::find($request->post('expires'));
         abort_if($expire === null, 400);
 
+        foreach ($expire->requirements as $requirement) {
+            if (!Expires::checkRequirement($requirement)) {
+                return back()->withErrors([ "You do not have permission to this action." ]);
+            }
+        }
+
         $entry = Entry::create([
             'slug' => $this->slug($request, $uuid),
             'uuid' => $uuid,

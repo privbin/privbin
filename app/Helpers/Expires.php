@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class Expires
@@ -30,9 +31,7 @@ class Expires
         }
 
         foreach ($object->requirements as $requirement) {
-            if ($requirement == "auth") {
-                $object->middlewares->add(\App\Http\Middleware\Authenticate::class);
-            }
+            $object->middlewares->add($requirement);
         }
 
         return $object;
@@ -59,5 +58,18 @@ class Expires
     public static function find(string $name) : ?object
     {
         return self::all()->where("name", $name)->first();
+    }
+
+    /**
+     * @param string $requirement
+     * @return bool
+     */
+    public static function checkRequirement(string $requirement) : bool
+    {
+        if ($requirement === "auth") {
+            return Auth::check();
+        }
+
+        return true;
     }
 }
