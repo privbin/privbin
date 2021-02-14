@@ -1,7 +1,7 @@
 {
     "name": "privbin/privbin",
     "type": "project",
-    "version": "v1.5.2",
+    "version": "v1.7.2",
     "description": "The Private Bin Application.",
     "keywords": [
         "private",
