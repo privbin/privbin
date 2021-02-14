@@ -139,6 +139,38 @@ class EntryController extends Controller
     }
 
     /**
+     * Edit the specified resource.
+     *
+     * @param Request $request
+     * @param Entry $entry
+     * @return Response
+     */
+    public function edit(Request $request, Entry $entry) : Response
+    {
+        abort_if(!Auth::check() || $entry->user->id != Auth::id(), 403);
+        $highlighters = Highlighter::highlighters($this->pluginSystem);
+        return response()->view("web.entry.edit", compact("highlighters", "entry"));
+    }
+
+    /**
+     * @param Request $request
+     * @param Entry $entry
+     * @return RedirectResponse
+     */
+    public function update(Request $request, Entry $entry) : RedirectResponse
+    {
+        abort_if(!Auth::check() || $entry->user->id != Auth::id(), 403);
+
+        $entry->update([
+            "highlighter" => $request->post("format"),
+            "title" => $request->post("title"),
+            "content" => $request->post("content"),
+        ]);
+
+        return response()->redirectToRoute("web.entry.show", $entry);
+    }
+
+    /**
      * @param Request $request
      * @param Entry $entry
      * @return Response

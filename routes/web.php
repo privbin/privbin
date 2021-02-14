@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('\App\Http\Controllers')->name('web.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home.index');
     Route::get('/entry/{entry}', 'EntryController@show')->name('entry.show');
+    Route::put('/entry/{entry}', 'EntryController@update')->name('entry.update');
+    Route::get('/entry/{entry}/edit', 'EntryController@edit')->name('entry.edit');
     Route::get('/entry/{entry}/raw', 'EntryController@raw')->name('entry.raw');
     Route::get('/entry/{entry}/embed', 'EntryController@embed')->name('entry.embed');
     Route::post('/entry/{entry}/access', 'EntryController@access')->name('entry.access');

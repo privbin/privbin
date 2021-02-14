@@ -6,6 +6,9 @@ use App\Enums\State;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
 
 /**
@@ -84,5 +87,20 @@ class Entry extends Model
     public function getRouteKeyName() : string
     {
         return 'slug';
+    }
+
+    /**
+     * @return HasOneThrough
+     */
+    public function user() : HasOneThrough
+    {
+        return $this->hasOneThrough(
+            User::class,
+            UserEntry::class,
+            "entry_id",
+            "id",
+            "id",
+            "user_id"
+        );
     }
 }
