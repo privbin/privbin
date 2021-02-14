@@ -24,6 +24,8 @@ return [
     'delete' => 'Delete',
     'raw' => 'Raw',
     'cancel' => 'Cancel',
+    'title' => 'Title',
+    'edit' => 'Edit',
 
     'expires' => 'Expires',
     'expire_after_minute_5' => 'After 5 minutes',
