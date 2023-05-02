@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "lib": ["dom", "es2021", "esnext"],
+        "declaration": false,
+        "declarationMap": false,
+        "jsx": "react-jsx",
+        "strict": false,
+        "pretty": false,
+        "sourceMap": false,
+        "baseUrl": "./resources/ts/",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "types": ["vite/client", "node"],
+        "paths": {
+            "@root": ["/"],
+            "@helpers": ["helpers.ts"],
+            "@components": ["components/index.ts"],
+            "@pages": ["pages/index.ts"],
+            "@layouts": ["layouts/index.ts"],
+            "@types": ["index.d.ts"]
+        }
+    },
+    "include": ["resources/ts/**/*"]
+}
